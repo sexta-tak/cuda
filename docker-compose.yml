@@ -1,0 +1,21 @@
+version: '3'
+services:
+  cuda:
+    build: .
+    container_name: 'torch'
+    # ports:
+    #   - "8000:8000"
+    network_mode: "host"
+    working_dir: '/root/'
+    tty: True
+    volumes:
+      - ./src:/root/src
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_DISABLE_REQUIRE=1
+      - DISPLAY=${DISPLAY}
